@@ -2,7 +2,7 @@
 
 - Installation
 
-    pip install -r requirements.txt
+        pip install -r requirements.txt
 
 - Rename example.env to .env and set environment variables in the .env file
 
