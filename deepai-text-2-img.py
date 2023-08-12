@@ -11,9 +11,8 @@ def text_to_image(prompt: str):
         data={
             'text': prompt,
         },
-        headers={'api-key': deepai_api_key}
-)
-print(response.json())
+        headers={'api-key': deepai_api_key})
+    print(response.json())
 
 
 def main():
