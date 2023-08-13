@@ -15,3 +15,6 @@
 - Run for OpenAI DALL-E 2
 
       python openai-text-2-img.py
+
+
+Check out [http://dall-e.amitpuri.com](http://dall-e.amitpuri.com/)
