@@ -46,12 +46,16 @@ def create_image_from_prompt(prompt: str, imagesize: str ="256x256", num_images:
 
 def main():
    prompt = 'While traveling through a dense forest, you stumble upon an ancient, overgrown path veering off from the main trail. Do you dare to explore its mysteries?'
-   output = text_to_image(openai_api_key,openai_api_image_generation, prompt) 
-   image_paths1 = write_image([output])
+
+   #Approach 1
+   image_url = text_to_image(openai_api_key,openai_api_image_generation, prompt) 
+   image_paths1 = write_image([image_url])
    
+   #Approach 2
    image_urls = create_image_from_prompt(prompt, num_images=2)
    image_paths2 = write_image(image_urls)
 
+   #Show images
    image_paths = [*image_paths1, *image_paths2]
    for image_path in image_paths:
       image = Image.open(image_path)
