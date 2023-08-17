@@ -1,4 +1,6 @@
 import requests
+from PIL import Image
+from random import randrange
 import json
 import os
 import openai
@@ -45,10 +47,32 @@ def create_image_from_prompt(prompt: str, imagesize: str ="256x256", num_images:
 def main():
    prompt = 'While traveling through a dense forest, you stumble upon an ancient, overgrown path veering off from the main trail. Do you dare to explore its mysteries?'
    output = text_to_image(openai_api_key,openai_api_image_generation, prompt)
-   print(output)
-   image_urls = create_image_from_prompt(prompt)
+   
+   image_paths = write_image([output])
+   for image_path in image_paths:
+      image = Image.open(image_path)
+      image.show()
+   image_urls = create_image_from_prompt(prompt, num_images=2)
+   image_paths = write_image(image_urls)
+   for image_path in image_paths:
+      image = Image.open(image_path)
+      image.show()
+
+
+
+def write_image(image_urls):
+   image_dir = os.path.join(os.curdir, 'images')
+   if not os.path.isdir(image_dir):
+      os.mkdir(image_dir)
    for image_url in image_urls:
-      print(image_url)
+      generated_image = requests.get(image_url).content
+      random_num = randrange(10000)
+      generated_image_file = f'generated_image_{random_num}.png'
+      image_path = os.path.join(image_dir, generated_image_file)
+      with open(image_path, "wb") as image_file:
+         image_file.write(generated_image)
+         yield image_path
+
 
 if __name__ == '__main__':
     main()
